@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .game-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .choice-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        .symbol {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        .chooser-label {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="game-container">
+            <h1>Rock, Paper, Scissors</h1>
+            <div class="choices">
+                <button class="choice-button" onclick="choose(0)">Rock</button>
+                <button class="choice-button" onclick="choose(1)">Paper</button>
+                <button class="choice-button" onclick="choose(2)">Scissors</button>
+            </div>
+            <p class="result" id="result"></p>
+            <div class="chooser-label" id="user-chooser-label"></div>
+            <pre class="symbol" id="user-symbol"></pre>
+            <div class="chooser-label" id="computer-chooser-label"></div>
+            <pre class="symbol" id="computer-symbol"></pre>
+        </div>
+    </div>
+
+    <script>
+        const choices = ["Rock", "Paper", "Scissors"];
+        const symbols = [
+            `
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+            `,
+            `
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+            `,
+            `
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+            `
+        ];
+
+        function choose(userChoice) {
+            const computerChoice = Math.floor(Math.random() * 3);
+            const result = determineWinner(userChoice, computerChoice);
+            const resultElement = document.getElementById("result");
+            const userSymbolElement = document.getElementById("user-symbol");
+            const computerSymbolElement = document.getElementById("computer-symbol");
+            const userChooserLabel = document.getElementById("user-chooser-label");
+            const computerChooserLabel = document.getElementById("computer-chooser-label");
+
+            userChooserLabel.textContent = "You chose";
+            userSymbolElement.textContent = `${symbols[userChoice]}`;
+            computerChooserLabel.textContent = "Computer chose";
+            computerSymbolElement.textContent = `${symbols[computerChoice]}`;
+
+            resultElement.textContent = `You chose ${choices[userChoice]}. Computer chose ${choices[computerChoice]}. ${result}`;
+        }
+
+        function determineWinner(userChoice, computerChoice) {
+            if (userChoice === computerChoice) {
+                return "It's a Tie!";
+            } else if ((userChoice === 0 && computerChoice === 2) || (userChoice === 1 && computerChoice === 0) || (userChoice === 2 && computerChoice === 1)) {
+                return "You Won!";
+            } else {
+                return "Computer Won!";
+            }
+        }
+    </script>
+</body>
+</html>
